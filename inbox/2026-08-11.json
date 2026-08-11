@@ -6,5 +6,13 @@
     "category": "Ăn uống",
     "note": "Cơm tấm",
     "created_at": "2026-08-11T04:35:34+00:00"
+  },
+  {
+    "id": "9f1df3f7",
+    "date": "2026-08-11",
+    "amount": 10000,
+    "category": "Ăn uống",
+    "note": "Nước rau má",
+    "created_at": "2026-08-11T04:43:57+00:00"
   }
 ]
