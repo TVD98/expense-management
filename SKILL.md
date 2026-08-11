@@ -20,8 +20,10 @@ Personal daily expense log → **one Excel file per month**, **one sheet per day
 | Day sheet | tab name `DD` (e.g. `10` for ngày 10) |
 | Month PDF report | `~/Documents/ChiTieu/reports/bao-cao-YYYY-MM.pdf` |
 | Scripts | `~/.cursor/skills/expense-tracker/scripts/` |
+| Inbox (JSON) | `<repo>/inbox/YYYY-MM-DD.json` (phone → desktop sync) |
 
-Create the data dir if missing. Never commit expense files to a git repo.
+Create the data dir if missing. Never commit the **Excel** files to a git repo.
+Only the JSON inbox files are meant to live in a repo (see Phone/Desktop sync).
 
 ## Sheet layout
 
@@ -111,6 +113,62 @@ Present totals in VND with thousand separators (e.g. `45.000`).
 Tell the user the PDF path and optionally `open` it on macOS.
 
 Triggers: “tóm tắt tháng”, “thống kê tháng”, “báo cáo PDF”, “xuất PDF”.
+
+## Phone → Desktop sync (JSON inbox)
+
+Use this when the Excel file is not on the current machine (e.g. phone / Cloud
+Agent). Chi tiêu is buffered as JSON in a git repo, then imported into Excel on
+the desktop.
+
+> The repo may be **public** — its `inbox/*.json` files are visible to anyone.
+> Warn the user before writing sensitive notes.
+
+### Phone side — add to inbox
+
+On phone, **show the Final draft then write straight to JSON** (no separate
+confirm step):
+
+```text
+## Final draft — chi tiêu
+- Ngày: YYYY-MM-DD
+- Số tiền: N VND
+- Danh mục: …
+- Ghi chú: …
+- Inbox: <repo>/inbox/YYYY-MM-DD.json
+```
+
+Then run, and commit + push the inbox file:
+
+```bash
+python3 ~/.cursor/skills/expense-tracker/scripts/add_expense_inbox.py \
+  --repo /path/to/expense-management \
+  --date YYYY-MM-DD --amount 45k --category "Ăn uống" --note "cafe"
+git -C /path/to/expense-management add inbox/
+git -C /path/to/expense-management commit -m "expense: add YYYY-MM-DD"
+git -C /path/to/expense-management push
+```
+
+### Desktop side — sync inbox into Excel
+
+Pull first, import, then commit + push the deletions:
+
+```bash
+git -C /path/to/expense-management pull
+python3 ~/.cursor/skills/expense-tracker/scripts/sync_inbox.py \
+  --repo /path/to/expense-management
+git -C /path/to/expense-management add -A inbox/
+git -C /path/to/expense-management commit -m "expense: sync inbox into Excel"
+git -C /path/to/expense-management push
+```
+
+`sync_inbox.py` imports every valid entry, deletes a file only when **all** its
+entries imported cleanly, and keeps files that contain an invalid entry (report
+shown under `kept`). Always `git pull` before sync and `git push` the deletions
+right after, so another machine never re-imports an already-synced file. Each
+entry carries an `id` to help spot duplicates if that ordering is broken.
+
+Triggers: “ghi chi tiêu trên điện thoại”, “sync chi tiêu”, “đồng bộ chi tiêu”,
+“lấy chi tiêu từ github”.
 
 ## Agent rules
 
