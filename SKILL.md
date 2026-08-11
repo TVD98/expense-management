@@ -125,8 +125,8 @@ the desktop.
 
 ### Phone side — add to inbox
 
-On phone, **show the Final draft then write straight to JSON** (no separate
-confirm step):
+On phone / Cloud Agent, **show the Final draft then write straight to JSON**
+(no separate confirm step):
 
 ```text
 ## Final draft — chi tiêu
@@ -137,15 +137,22 @@ confirm step):
 - Inbox: <repo>/inbox/YYYY-MM-DD.json
 ```
 
-Then run, and commit + push the inbox file:
+Then run, and commit + push the inbox file **directly on `main`**:
+
+- **Always** checkout / stay on `main` (pull first if needed).
+- **Do not** create a feature branch.
+- **Do not** open a pull request.
+- Edit only `inbox/*.json`, then commit and push to `origin/main`.
 
 ```bash
+git -C /path/to/expense-management checkout main
+git -C /path/to/expense-management pull origin main
 python3 ~/.cursor/skills/expense-tracker/scripts/add_expense_inbox.py \
   --repo /path/to/expense-management \
   --date YYYY-MM-DD --amount 45k --category "Ăn uống" --note "cafe"
 git -C /path/to/expense-management add inbox/
-git -C /path/to/expense-management commit -m "expense: add YYYY-MM-DD"
-git -C /path/to/expense-management push
+git -C /path/to/expense-management commit -m "expense: add YYYY-MM-DD <note> <amount>"
+git -C /path/to/expense-management push origin main
 ```
 
 ### Desktop side — sync inbox into Excel
@@ -175,5 +182,7 @@ Triggers: “ghi chi tiêu trên điện thoại”, “sync chi tiêu”, “đ
 - Do not invent expenses the user did not state.
 - Do not write Excel until confirm.
 - Prefer running the scripts over ad-hoc Python.
+- Phone / Cloud Agent inbox writes: **commit + push straight to `main`** — no
+  new branch, no PR.
 - If `openpyxl` is missing: `pip3 install --user openpyxl`, then retry.
 - If `matplotlib` is missing (charts): `pip3 install --user matplotlib`, then retry.
