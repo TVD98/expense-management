@@ -38,5 +38,13 @@
     "category": "Ăn uống",
     "note": "Cf",
     "created_at": "2026-08-12T06:03:24+00:00"
+  },
+  {
+    "id": "a51867b4",
+    "date": "2026-08-12",
+    "amount": 40000,
+    "category": "Ăn uống",
+    "note": "Cơm quán",
+    "created_at": "2026-08-12T06:03:46+00:00"
   }
 ]
