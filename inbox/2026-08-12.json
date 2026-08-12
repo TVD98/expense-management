@@ -6,5 +6,13 @@
     "category": "Di chuyển",
     "note": "Tàu điện",
     "created_at": "2026-08-12T05:09:38+00:00"
+  },
+  {
+    "id": "98187c21",
+    "date": "2026-08-12",
+    "amount": 300000,
+    "category": "Di chuyển",
+    "note": "Vé tháng Metro",
+    "created_at": "2026-08-12T05:09:52+00:00"
   }
 ]
