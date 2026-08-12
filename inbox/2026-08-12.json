@@ -30,5 +30,13 @@
     "category": "Ăn uống",
     "note": "Hủ tiếu",
     "created_at": "2026-08-12T05:10:55+00:00"
+  },
+  {
+    "id": "05ecbb5d",
+    "date": "2026-08-12",
+    "amount": 35000,
+    "category": "Ăn uống",
+    "note": "Cf",
+    "created_at": "2026-08-12T06:03:24+00:00"
   }
 ]
