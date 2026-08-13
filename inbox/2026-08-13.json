@@ -22,5 +22,13 @@
     "category": "Ăn uống",
     "note": "Cơm tấm",
     "created_at": "2026-08-13T05:13:43+00:00"
+  },
+  {
+    "id": "0dfe5bcf",
+    "date": "2026-08-13",
+    "amount": 20000,
+    "category": "Ăn uống",
+    "note": "Đá me",
+    "created_at": "2026-08-13T05:22:42+00:00"
   }
 ]
